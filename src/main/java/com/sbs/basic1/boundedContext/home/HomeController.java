@@ -1,7 +1,6 @@
-package com.sbs.basic1.controller;
+package com.sbs.basic1.boundedContext.home;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.*;
