@@ -261,6 +261,37 @@ public class HomeController {
 
     return "%d번 사람이 삭제되었습니다.".formatted(id);
   }
+
+  @GetMapping("/home/modifyPerson")
+  @ResponseBody
+  public String modifyPerson(int id, String name, int age) {
+
+    /*
+    Person found = null;
+
+    for(Person p : people) {
+      if(p.getId() == id) {
+        found = p;
+        break;
+      }
+    }
+
+    */
+
+    Person found = people.stream()
+            .filter(p -> p.getId() == id) // 해당 녀석인 참인것만 필터린
+            .findFirst() // 필터링 결과가 하나만 남는데, 그 하나 남은 걸 가져온다.
+           .orElse(null); // 없으면 null을 넣어라
+
+    if(found == null) {
+      return "%d번 사람이 존재하지 않습니다.".formatted(id);
+    }
+
+    found.setName(name);
+    found.setAge(age);
+
+    return "%d번 사람이 수정되었습니다.".formatted(id);
+  }
 }
 
 
@@ -320,8 +351,10 @@ class Car2 {
 class Person {
   private static int lastId;
   private final int id;
-  private final String name;
-  private final int age;
+  @Setter
+  private String name;
+  @Setter
+  private int age;
 
   static {
     lastId = 0;
