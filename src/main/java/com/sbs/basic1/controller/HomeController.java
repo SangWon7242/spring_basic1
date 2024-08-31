@@ -1,9 +1,6 @@
 package com.sbs.basic1.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +16,11 @@ import java.util.Map;
 // HomeController는 컨트롤러다.
 public class HomeController {
   int count;
+  List<Person> people;
 
   public HomeController() {
     count = -1;
+    people = new ArrayList<>();
   }
 
   /*
@@ -201,6 +200,24 @@ public class HomeController {
 
     return list;
   }
+
+  @GetMapping("/home/addPerson")
+  @ResponseBody
+  public String addPerson(String name, int age) {
+    Person p = new Person(name, age);
+
+    System.out.println(p);
+
+    people.add(p);
+
+    return "%d번 사람이 추가되었습니다.".formatted(p.getId());
+  }
+
+  @GetMapping("/home/showPeople")
+  @ResponseBody
+  public List<Person> showPeople() {
+    return people;
+  }
 }
 
 
@@ -252,4 +269,22 @@ class Car2 {
   int speed;
   String name;
   List<Integer> carNo;
+}
+
+@AllArgsConstructor
+@Getter
+@ToString
+class Person {
+  private static int lastId;
+  private final int id;
+  private final String name;
+  private final int age;
+
+  static {
+    lastId = 0;
+  }
+
+  Person(String name, int age) {
+    this(++lastId, name, age);
+  }
 }
