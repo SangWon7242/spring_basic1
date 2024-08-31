@@ -1,15 +1,17 @@
 package com.sbs.basic1.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 // 개발자가 스프링부트한테 말한다.
@@ -55,6 +57,36 @@ public class HomeController {
   public int showIncrease() {
     count++;
     return count;
+  }
+
+  @GetMapping("/home/cookie/increase")
+  @ResponseBody
+  public int showCookieIncrease(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+    int countInCookie = 0;
+
+    if(req.getCookies() != null) {
+      countInCookie = Arrays.stream(req.getCookies())
+          .filter(cookie -> cookie.getName().equals("count"))
+          .map(Cookie::getValue)
+          .mapToInt(Integer::parseInt)
+          .findFirst()
+          .orElse(0);
+    }
+
+    int newCountInCookie = countInCookie + 1;
+    resp.addCookie(new Cookie("count", newCountInCookie + ""));
+
+    return newCountInCookie;
+  }
+
+  @GetMapping("/home/reqAndResp")
+  @ResponseBody
+  public void showReqAndResp(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    // HttpServletRequest req, : 받은 편지
+    // HttpServletResponse resp, : 보낼 편지
+    int age = Integer.parseInt(req.getParameter("age"));
+    resp.getWriter().append("Hello, I'm %d years old\n".formatted(age));
   }
 
   @GetMapping("/home/plus")
