@@ -6,6 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,13 +21,13 @@ import java.util.*;
 public class HomeController {
   int count;
   List<Person> people;
+
+  @Autowired // 객체가 생성되고 생성 된 객체 리모콘을 변수에 연결!
   private MemberService memberService;
 
   public HomeController() {
     count = -1;
     people = new ArrayList<>();
-
-    memberService = new MemberService();
   }
 
   /*
