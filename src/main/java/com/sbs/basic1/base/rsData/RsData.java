@@ -21,4 +21,16 @@ public class RsData {
   public boolean isSuccess() {
     return resultCode.startsWith("S-");
   }
+  /*
+  // Jackson 룰에 의해 함수 타입이 boolean이고 is로 시작하는 메서드는
+  // is가 빠지고 메서드명이 소문자로 변경되서 리턴된 결과가 브라우저에 나타남
+  public boolean isAge() {
+    return true;
+  }
+
+  // get이 빠지고 메서드명이 소문자로 변경되서 리턴된 결과가 브라우저에 나타남
+  public int getABC() {
+    return 10;
+  }
+   */
 }
