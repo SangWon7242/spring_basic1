@@ -61,6 +61,8 @@ public class MemberController {
 
     boolean cookieRemoved = rq.removeCookie("loginedMemberId");
 
+    System.out.println(cookieRemoved);
+
     if(!cookieRemoved) {
       return RsData.of("F-1", "이미 로그아웃 상태입니다.");
     }
