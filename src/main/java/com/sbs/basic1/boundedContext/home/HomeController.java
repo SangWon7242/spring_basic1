@@ -22,12 +22,19 @@ public class HomeController {
   int count;
   List<Person> people;
 
+  /*
+  // 필드주입
   @Autowired // 객체가 생성되고 생성 된 객체 리모콘을 변수에 연결!
   private MemberService memberService;
+   */
 
-  public HomeController() {
+  private final MemberService memberService;
+  
+  // @Autowired // 생략 가능 
+  public HomeController(MemberService memberService) {
     count = -1;
     people = new ArrayList<>();
+    this.memberService = memberService;
   }
 
   /*
