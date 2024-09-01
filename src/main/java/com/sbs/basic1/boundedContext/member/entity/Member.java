@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @Getter
 public class Member {
-  private static int lastId;
+  private static long lastId;
   private final long id;
   private final String username;
   @Setter
