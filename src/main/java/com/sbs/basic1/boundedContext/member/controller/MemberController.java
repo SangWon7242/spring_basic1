@@ -20,8 +20,14 @@ public class MemberController {
   @ResponseBody
   public RsData login(String username, String password) {
 
-    RsData loginRsData = memberService.tryLogin(username, password);
+    if(username == null || username.trim().isEmpty()) {
+      return RsData.of("F-3", "username(을)를 입력해주세요.");
+    }
 
-    return loginRsData;
+    if(password == null || password.trim().isEmpty()) {
+      return RsData.of("F-4", "password(을)를 입력해주세요.");
+    }
+
+    return memberService.tryLogin(username, password);
   }
 }
