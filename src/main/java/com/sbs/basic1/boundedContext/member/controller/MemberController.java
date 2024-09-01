@@ -35,7 +35,7 @@ public class MemberController {
 
     if (rsData.isSuccess()) {
       Member member = (Member) rsData.getData();
-      rq.setCookie("loginedMemberId", member.getId());
+      rq.setSession("loginedMemberId", member.getId());
     }
 
     return rsData;
@@ -44,9 +44,7 @@ public class MemberController {
   @GetMapping("/logout")
   @ResponseBody
   public RsData logout(HttpServletRequest req, HttpServletResponse resp) {
-    boolean cookieRemoved = rq.removeCookie("loginedMemberId");
-
-    System.out.println(cookieRemoved);
+    boolean cookieRemoved = rq.removeSession("loginedMemberId");
 
     if(!cookieRemoved) {
       return RsData.of("F-1", "이미 로그아웃 상태입니다.");
@@ -58,7 +56,7 @@ public class MemberController {
   @GetMapping("/me")
   @ResponseBody
   public RsData showMe(HttpServletRequest req, HttpServletResponse resp) {
-    long loginedMemberId = rq.getCookieAsLong("loginedMemberId", 0);
+    long loginedMemberId = rq.getSessionAsLong("loginedMemberId", 0);
 
     boolean isLogined = loginedMemberId > 0;
 
